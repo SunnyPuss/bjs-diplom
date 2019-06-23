@@ -1,12 +1,19 @@
 class Profile {
-    constructor (userName, realName, password) {
-        this.userName = new String (userName);
-        this.realName = realName;
+    constructor (username, name = {firstname, secondname}, password) {
+        this.username = new String (username);
+        this.name = name;
         this.password = new String (password);
-        realName = {name, surname};
+        this.firstname = new String (name.firstname);
+        this.secondname = new String (name.secondname);
+            
     }
 
-    addNewUser() {
-        const userName = new Profile (userName, realName, password)
+    addNewUser(callback) {
+        const username = new Profile (username, name, password)
+        callback (username);
     }
+
+    authorisation() {}
+
 }
+addNewUser (Ivan, {Ivan, Ivanov}, 123)
