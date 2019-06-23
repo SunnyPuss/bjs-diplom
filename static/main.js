@@ -7,6 +7,6 @@ class Profile {
     }
 
     addNewUser() {
-        const this.userName = new Profile (userName, realName, password)
+        const userName = new Profile (userName, realName, password)
     }
 }
