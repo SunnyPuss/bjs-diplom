@@ -1,19 +1,50 @@
 class Profile {
-    constructor (username, name = {firstname, secondname}, password) {
-        this.username = new String (username);
+    constructor (username, name: { firstName, lastName }, password) {
+        this.username = username;
         this.name = name;
-        this.password = new String (password);
-        this.firstname = new String (name.firstname);
-        this.secondname = new String (name.secondname);
-            
+        this.password = password;
+        
     }
 
-    addNewUser(callback) {
-        const username = new Profile (username, name, password)
-        callback (username);
+    addNewUser({username, name: { firstName, lastName }, password}, callback) {
+        return ApiConnector.createUser({ username, name: { firstName, lastName }, password }, (err, data) => {
+            console.log(`Creating user ${this.username}`);
+            callback (err, data);
+        });
     }
 
-    authorisation() {}
+    authorisation({username, password}, callback) {
+        return ApiConnector.performLogin({username, password}, (err, data) => {
+            console.log(`Authorising user ${this.username}`)
+            callback (err, data);
+        });
+    }
 
+    addMoney({ currency, amount }, callback) {
+        return ApiConnector.addMoney({ currency, amount }, (err, data) => {
+            console.log(`Adding ${amount} of ${currency} to ${this.username}`);
+            callback(err, data);
+        });
+    }
+
+    currencyConvertion({ fromCurrency, targetCurrency, targetAmount }, callback) {
+        return ApiConnector.convertMoney({ fromCurrency, targetCurrency, targetAmount }, (err,data) => {
+            console.log(`Convderting ${fromCurrency} to ${targetAmount} ${targetCurrency}`);
+            callback(err, data);
+        });
+    }
+
+    tokensTransaction({ to, amount }, callback) {
+        return ApiConnector.ransferMoney({ to, amount }, (err, data) => {
+            console.log(`Transfering ${amount} of Netkoins to ${to}`);
+            callback(err, data);
+        });
+    }
 }
-addNewUser (Ivan, {Ivan, Ivanov}, 123)
+
+const getCurrencyRate = (callback) => {
+    return ApiConnector.getStocks((err,data) => {
+        let CurrenceRate = getCurrencyRate;
+        callback(err, data)
+    })
+}
