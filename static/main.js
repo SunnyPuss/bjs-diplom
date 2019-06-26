@@ -1,21 +1,20 @@
 class Profile {
-    constructor (username, name: { firstName, lastName }, password) {
+    constructor ({username, name: {firstName, lastName}, password}) {
         this.username = username;
-        this.name = name;
+        this.name = name ;
         this.password = password;
-        
     }
 
     addNewUser({username, name: { firstName, lastName }, password}, callback) {
         return ApiConnector.createUser({ username, name: { firstName, lastName }, password }, (err, data) => {
-            console.log(`Creating user ${this.username}`);
+            console.log(`Creating user ${username}`);
             callback (err, data);
         });
     }
 
     authorisation({username, password}, callback) {
         return ApiConnector.performLogin({username, password}, (err, data) => {
-            console.log(`Authorising user ${this.username}`)
+            console.log(`Authorising user ${username}`)
             callback (err, data);
         });
     }
@@ -44,7 +43,27 @@ class Profile {
 
 const getCurrencyRate = (callback) => {
     return ApiConnector.getStocks((err,data) => {
-        let CurrenceRate = getCurrencyRate;
         callback(err, data)
     })
+}
+
+let currentRate = getCurrencyRate;
+
+function main () {
+    const vovan = new Profile ({
+        username: 'vovan',
+        name: { firstName: 'Voldemar', lastName: 'Crush' },
+        password: 'purrpurrpurr',
+    });
+    
+    const vasyan = new Profile ({
+        username: 'vasyan',
+        name: { firstName: 'Basileos', lastName: 'Thunderer' },
+        password: 'badumts',
+    });
+
+    vovan.addNewUser(
+
+    );
+
 }
