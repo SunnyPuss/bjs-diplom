@@ -5,15 +5,26 @@ class Profile {
         this.password = password;
     }
 
-    addNewUser({username, name: { firstName, lastName }, password}, callback) {
-        return ApiConnector.createUser({ username, name: { firstName, lastName }, password }, (err, data) => {
+    addNewUser(callback) {
+        return ApiConnector.createUser(
+            {
+            username: this.username, 
+            name: this.name,
+            password: this.password 
+            },
+            (err, data) => {
             console.log(`Creating user ${username}`);
             callback (err, data);
         });
     }
 
-    authorisation({username, password}, callback) {
-        return ApiConnector.performLogin({username, password}, (err, data) => {
+    authorisation(callback) {
+        return ApiConnector.performLogin(
+            {
+            username: this.username, 
+            password: this.password
+            },
+            (err, data) => {
             console.log(`Authorising user ${username}`)
             callback (err, data);
         });
@@ -34,22 +45,30 @@ class Profile {
     }
 
     tokensTransaction({ to, amount }, callback) {
-        return ApiConnector.ransferMoney({ to, amount }, (err, data) => {
+        return ApiConnector.transferMoney({ to, amount }, (err, data) => {
             console.log(`Transfering ${amount} of Netkoins to ${to}`);
             callback(err, data);
         });
     }
 }
 
-const getCurrencyRate = (callback) => {
-    return ApiConnector.getStocks((err,data) => {
-        callback(err, data)
-    })
+function getStocks(callback) {
+	return ApiConnector.getStocks((err, data) => {
+			console.log(`Getting stocks info`);
+			callback(err, data[99]);
+	});
 }
 
-let currentRate = getCurrencyRate;
-
 function main () {
+
+    getStocks (callback)
+    if (err) {
+        return console.log(`Getting stocks failed`);
+    } else {
+        console.log(`Getting stocks info`)
+        const currentRate = data[99];
+    }
+
     const vovan = new Profile ({
         username: 'vovan',
         name: { firstName: 'Voldemar', lastName: 'Crush' },
@@ -62,8 +81,33 @@ function main () {
         password: 'badumts',
     });
 
-    vovan.addNewUser(
+    vovan.addNewUser((err, data) => {
+        if (err) {
+            console.log(`${this.username} is not created.`);
+        } else {
+            console.log(`${this.username} is created!`);
+            vovan.authorisation((err, data) => {
+                if (err) {
+                    console.log(`${this.username} is not authorised.`);
+                } else {
+                    console.log(`${this.username} is authorised!`);
+                    vovan.addMoney({currency:`EUR`, amount: 500000}, (err, data) => {
+                        if (err) {
+                            console.log('Error during adding money to Ivan');
+                        } else {
+                            console.log(`Added ${amount} ${currency} to ${this.username}`);
+                            vovan.currencyConvertion({fromCurrency: , targetCurrency: , targetAmount:}
 
-    );
+                            )
+                        }
+                    })
+                }
+            })
+        }
+    })
+                    
+            
 
 }
+
+main()
