@@ -1,7 +1,10 @@
 class Profile {
     constructor ({username, name: {firstName, lastName}, password}) {
         this.username = username;
-        this.name = name ;
+        this.name = {
+            firstName,
+            lastName
+        };
         this.password = password;
     }
 
@@ -13,7 +16,7 @@ class Profile {
             password: this.password 
             },
             (err, data) => {
-            console.log(`Creating user ${username}`);
+            console.log(`Creating user ${this.username}`);
             callback (err, data);
         });
     }
