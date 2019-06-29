@@ -61,13 +61,16 @@ function getStocks(callback) {
 
 function main () {
 
-    getStocks (callback)
-    if (err) {
-        return console.log(`Getting stocks failed`);
-    } else {
-        console.log(`Getting stocks info`)
-        const currentRate = data[99];
-    }
+let currentRate;
+
+    getStocks ((err, data) => {
+        if (err) {
+            console.error(`Error during getting stocks`);
+            throw err;
+        }
+        currentRate = data;
+    });
+
 
     const vovan = new Profile ({
         username: 'vovan',
@@ -96,18 +99,34 @@ function main () {
                             console.log('Error during adding money to Ivan');
                         } else {
                             console.log(`Added ${amount} ${currency} to ${this.username}`);
-                            vovan.currencyConvertion({fromCurrency: , targetCurrency: , targetAmount:}
-
-                            )
+                            vovan.currencyConvertion({fromCurrency: "EUR", targetCurrency: "Netcoins", targetAmount: 50000}, (err, data) => {
+                                const targetAmount = currentRate[`EUR_NETCOIN`] * 50000;
+                                if (err) {
+                                    console.log(`Error during money convertation`);
+                                } else {
+                                    console.log(`Condertet to coins ⏵ {name: {${this.name}}, wallet: {${targetAmount}}, username: {${this.username}}}`);
+                                    vasyan.addNewUser((err, data) => {
+                                        if (err) {
+                                            console.log(`${this.username} is not created.`);
+                                        } else {
+                                            console.log(`${this.username} is created!`);
+                                            vovan.tokensTransaction({ to: vasyan.username, amount: 36000}, (err, data) => {
+                                                if (err) {
+                                                    console.log(`Error during transfering money. Where is the money Lebowsky?!`);
+                                                } else {
+                                                    console.log(`${vasyan.name.firstName} has got ${amount} NETCOINS`);
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
                         }
                     })
                 }
             })
         }
     })
-                    
-            
-
 }
 
 main()
