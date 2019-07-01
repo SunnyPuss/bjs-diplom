@@ -28,7 +28,7 @@ class Profile {
             password: this.password
             },
             (err, data) => {
-            console.log(`Authorising user ${username}`)
+            console.log(`Authorising user ${this.username}`)
             callback (err, data);
         });
     }
