@@ -89,35 +89,37 @@ let currentRate;
 
     vovan.addNewUser((err, data) => {
         if (err) {
-            console.log(`${this.username} is not created.`);
+            console.log(`${vovan.username} is not created.`);
         } else {
-            console.log(`${this.username} is created!`);
+            console.log(`${vovan.username} is created!`);
             vovan.authorisation((err, data) => {
                 if (err) {
-                    console.log(`${this.username} is not authorised.`);
+                    console.log(`${vovan.username} is not authorised.`);
                 } else {
-                    console.log(`${this.username} is authorised!`);
-                    vovan.addMoney({currency:`EUR`, amount: 500000}, (err, data) => {
+                    console.log(`${vovan.username} is authorised!`);
+                    vovan.addMoney({currency: 'EUR', amount: 500000}, (err, data) => {
                         if (err) {
-                            console.log('Error during adding money to Ivan');
+                            console.log('Error during adding money to vovan');
                         } else {
-                            console.log(`Added ${amount} ${currency} to ${this.username}`);
-                            vovan.currencyConvertion({fromCurrency: "EUR", targetCurrency: "Netcoins", targetAmount: 50000}, (err, data) => {
-                                const targetAmount = currentRate[`EUR_NETCOIN`] * 50000;
+                            console.log(`Added 500000 EUR to ${vovan.username}`);
+
+                            const targetAmount = currentRate['EUR_NETCOIN'] * 50000;
+
+                            vovan.currencyConvertion({fromCurrency: "EUR", targetCurrency: "NETCOIN", targetAmount: targetAmount}, (err, data) => {
                                 if (err) {
                                     console.log(`Error during money convertation`);
                                 } else {
-                                    console.log(`Condertet to coins ⏵ {name: {${this.name}}, wallet: {${targetAmount}}, username: {${this.username}}}`);
+                                    console.log(`Condertet to coins ⏵ {name: {${vovan.name}}, wallet: {${targetAmount}}, username: {${this.username}}}`);
                                     vasyan.addNewUser((err, data) => {
                                         if (err) {
-                                            console.log(`${this.username} is not created.`);
+                                            console.log(`${vasyan.username} is not created.`);
                                         } else {
-                                            console.log(`${this.username} is created!`);
-                                            vovan.tokensTransaction({ to: vasyan.username, amount: 36000}, (err, data) => {
+                                            console.log(`${vasyan.username} is created!`);
+                                            vovan.tokensTransaction({ to: vasyan.username, amount: targetAmount}, (err, data) => {
                                                 if (err) {
                                                     console.log(`Error during transfering money. Where is the money Lebowsky?!`);
                                                 } else {
-                                                    console.log(`${vasyan.name.firstName} has got ${amount} NETCOINS`);
+                                                    console.log(`${vasyan.name.firstName} has got ${targetAmount} NETCOINS`);
                                                 }
                                             })
                                         }
@@ -132,4 +134,4 @@ let currentRate;
     })
 }
 
-main()
+main();
